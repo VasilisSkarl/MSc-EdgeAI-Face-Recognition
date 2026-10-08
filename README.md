@@ -1,20 +1,25 @@
-# MSc-EdgeAI-Face-Recognition
+# Edge AI Face Recognition Optimization via INT8 Post-Training Quantization
 
-Το παρόν αποθετήριο (repository) περιέχει τον κώδικα και τη γραμμή παραγωγής (pipeline) για τη μεταπτυχιακή διατριβή του MSc Artificial Intelligence:
-**«Βελτιστοποίηση Βαθιών Μοντέλων Αυτόματης Αναγνώρισης Προσώπου για Εφαρμογές Υπολογιστικής Όρασης σε Συσκευές Άκρου (Edge AI)»**.
+This repository contains the code and engineering pipeline for the MSc Artificial Intelligence thesis:
+**"Optimizing Deep Face Recognition Models for Edge AI Computer Vision Deployments"**.
 
-## Επισκόπηση Έργου
-Ο στόχος της διατριβής είναι η σχεδίαση, υλοποίηση και αξιολόγηση ενός ολοκληρωμένου pipeline αναγνώρισης προσώπου. Η έρευνα εστιάζει στη συμπίεση και βελτιστοποίηση κορυφαίων αρχιτεκτονικών (ArcFace) μέσω τεχνικών συμπίεσης, συγκεκριμένα Quantization (Κβαντισμός).
+## Project Overview
+The primary goal is designing, implementing, and evaluating an end-to-end edge deployment pipeline for face recognition. The project focuses on model compression and latency reduction of state-of-the-art architectures (**ArcFace**) via **INT8 Post-Training Quantization (PTQ)**.
 
-Στόχος είναι η δραματική μείωση του μεγέθους των μοντέλων και του χρόνου εκτέλεσης (inference latency), ώστε να είναι εφικτή η τοπική λειτουργία τους σε πραγματικό χρόνο απευθείας σε συσκευές περιορισμένων πόρων (Edge AI, smartphones, embedded systems), χωρίς σημαντική επίπτωση στην ακρίβεια ταξινόμησης.
+The objective is to drastically minimize memory footprint and inference latency, enabling real-time on-device inference on resource-constrained hardware (embedded systems, mobile, edge devices) while preserving recognition accuracy.
 
-## Τρέχουσα Κατάσταση Ανάπτυξης
-- Αρχική παραμετροποίηση του GitHub Repository και του .gitignore.
-- Ενσωμάτωση του DeepFace Framework και αυτόματη φόρτωση των βαρών του ArcFace.
-- Επιτυχής εξαγωγή baseline face embeddings (διανύσματα χαρακτηριστικών 512 διαστάσεων).
-- Υλοποίηση τεχνικής Post-Training Quantization (INT8) μέσω του TensorFlow Lite (TFLiteConverter).
-- Προσομοίωση deployment στο άκρο (Μετατροπή σε μορφή TensorFlow Lite).
+## Technical Architecture & Pipeline
+- **Base Architecture:** ArcFace backbone via the DeepFace framework.
+- **Feature Extraction:** High-dimensional 512-D identity embeddings.
+- **Optimization Strategy:** Post-Training Quantization (PTQ) to INT8 precision using `tf.lite.TFLiteConverter`.
+- **Target Runtime:** TensorFlow Lite (TFLite) for lightweight edge execution.
+- **Evaluation Metrics:** Cosine Similarity retention across Intra-Class and Inter-Class verification pairs.
 
-## Σύνολα Δεδομένων Αναφοράς
-- **Εικόνες Ελέγχου Επαλήθευσης (Verification Samples):** Αντιπροσωπευτικά δείγματα εικόνων προσώπου διαστάσεων 112x112 pixels για την πειραματική αξιολόγηση της συνημιτονικής ομοιότητας σε σενάρια ίδιου προσώπου (Intra-Class) και διαφορετικών προσώπων (Inter-Class).
-- **Προ-εκπαιδευμένα Βάρη ArcFace:** Αξιοποίηση των προ-εκπαιδευμένων βαρών της αρχιτεκτονικής ArcFace μέσω του DeepFace framework, με εκπαίδευση σε δεδομένα αναφοράς μεγάλης κλίμακας.
+## Verification & Dataset
+- **Verification Samples:** Aligned 112x112 face images evaluated under controlled intra-class (same identity) and inter-class (different identity) conditions.
+- **Pretrained Weights:** Large-scale pretrained ArcFace weights utilized for robust feature representations prior to quantization.
+
+## Key Outcomes
+- **Model Compression:** Substantial memory footprint reduction (~4x reduction moving from FP32 to INT8).
+- **Latency Gain:** Accelerated on-device inference latency suitable for edge compute.
+- **Accuracy Retention:** Maintained strong cosine similarity separation between matching and non-matching identity pairs post-quantization.
